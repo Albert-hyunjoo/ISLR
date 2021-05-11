@@ -60,3 +60,50 @@
 * `Unsupervised` 모델의 경우에는 **종속변수 값이 없다**. 대신 **변수 간의 관계**에 집중한다.
   * ex) Cluster Analysis: 변수 간의 집단을 구성하여 파악한다,
 * 단, 이 두 개를 나누는 기준도 **명확하지는 않다**. (**한 문제에 두 개의 경우**가 섞여있을 수 있다)
+
+## Regression Versus Classification
+* 변수에는 `정량적 변수`와 `정성적 변수`가 존재한다.
+* 만약 `정량적 변수` 사이의 관계를 주로 본다면 `regression (회귀)`, `정성적`이면 `classification`이라고 한다.
+* 하지만 회귀와 분류 사이의 기준또한 다른 것과 마찬가지로 명확하지는 않다. (`KNN`이나 `Boosting`)
+
+## Assessing Model Accuracy (모델 정확도 측정)
+* 어떤 모델도 다른 모델보다 항상 우수하거나 열등한 경우는 없다.
+* 즉, 조사하고자 하는 데이터셋에 **잘 맞는 모델**이 무엇인지를 파악하는 방법이 필요하다.
+
+### Measuring The Quality of Fit
+* 모델에 따라 예측한 결과가 실제 데이터셋에 맞는 정도를 측정한다.
+* 가장 많이 쓰이는 value는 `MSE (Mean-Squared Error)`이다.
+> *MSE* = 1/n * 𝛴(Yi - ^f(Xi))^2    
+> **MSE**는 **실제값과 예측값의 차이의 제곱**을 **샘플 수**로 나는 것이다.
+* 실제로 우리가 신경쓰는 건 **우리의 예측**이 **모델의 실제값과 얼마나 차이나냐는 것**에 해당한다.
+* 문제는 **훈련 상에서 낮은 MSE**가 **실제 테스트에서의 낮은 MSE를 보장하지는 않는다**는 점이다.
+* `flexibility`가 커지면, 그 curve는 데이터에 `좀 더 가깝게 fit`하는 경우가 많다.
+* `flexibility`의 레벨에 따라서, 이 데이터에 대한 다양한 fit을 찾을 수 있다.
+* 그 `flexibility`의 정도는 `degrees of freedom`을 통해 구한다.
+* 만약 유연도가 낮아지기 시작하면,`Training MSE`는 낮아지더라도 `Test MSE`가 낮아지진 않는다.
+* 만약 Training MSE가 Test MSE에 비해 지나치게 낮으면 `overfitting`을 의심해야 한다.
+
+### The Bias-Variance Trade-off
+> *MSE*     
+> = 1/n * 𝛴(Yi - ^f(Xi))^2    
+> = Var(^F(x0)) + [Bias(^f(X0))]^2 + Var(ε)
+
+* 어떤 모델을 썼을 때 예상되는 MSE는 위의 식대로 구할 수 있다.
+* 즉, **어떤 모델을 쓸 때 `variance`와 `bias`가 낮은 것**을 써야 한다.
+* 여기서 `Variance`는 다른 Training Set이 제공될 때 ^F(Xi)가 바뀌는 정도,
+* `bias`는 실질적인 문제로 인해 생기는 오류에 해당한다. (*즉, 실제 모델과 예측 모델의 차이*)
+* 실제 문제에서는 **True F를 찾을 수 없**으므로 반드시 **bias-variance trade-off**를 기억해야 한다!
+
+## Classification Setting
+* 이전의 여러 고려사항은 `regression`에 적용되었으나, `classification`에도 이를 적용할 수 있다.
+* 단, 종속변수가 categorical이므로 이에 따룬 약간의 조절은 필요하다.
+* 주로 쓰이게 되는 classification의 정확도의 척도는 `Error Rate`로 다음과 같다:
+> *Error Rate*    
+> = 1/n * 𝛴(n, i=1) * I(Yi = ^Yi)     
+> = 즉, Yes/No중 **얼마나 많이 맞췄는가 (같으면 0, 틀리면 1)**에 대한 비율을 구하는 것
+
+### Bayes Classifier
+* 예측 데이터 x0에 대해서 다음과 같은 확률을 구할 수 있다.    
+> Pr(Y=j | x = x0)    
+> = *x*가 예측 데이터 *x0*일때, *y가 j*일 확률에 해당
+* 이는 `조건부 확률`로, **어떤 상황이 주어졌을 때의 확률**에 대해 설명하는 것이다.

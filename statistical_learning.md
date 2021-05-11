@@ -121,3 +121,4 @@
 > 2. 이를 갖고 대략적인 조건부 확률을 다음의 식을 통해 어림한다
 > > Pr(Y = j | X = X₀) = 1/K * 𝛴(i는 𝑁₀에 포함) * I(Yi = j)
 * K 값의 default는 5로, 이 값은 너무 커서도 작아서도 안된다.
+* 조금 자세한 설명은 여기 [링크](https://john-analyst.medium.com/knn-%EC%B5%9C%EA%B7%BC%EC%A0%91-%EC%9D%B4%EC%9B%83-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-b397a0b2030e) 참고하기! 

@@ -103,3 +103,47 @@
     2) Backward: 모든 변수가 포함된 모델에서 하나씩 빼는 방법
     3) Mixed Selection: 두개를 섞어서 쓰는 방법
 
+#### Model Fit
+* 어떤 모델 적합도를 측정하는 척도는 `R^2`와 `RSE`에 해당한다.
+* 다중 변수 회귀 환경 하에서 `R^2`는 `Cor(Y, ^Y)^2`, 즉 `Response`와 `Fitted Linear Model`의 상관관계 제곱이다.
+* `Fitted Model`은 **이 수치가 가장 높은 환경**임을 의미한다.
+* 즉, `R^2`가 1에 가까울 수록 이 모델이 **데이터의 대부분을 설명할 수 있다**는 의미이다.
+* 단, 변수를 넣었을 때 그 수치에 큰 변화가 없으면 이에 대해 신중해야 한다.
+* `RSE`는 **√(1/n-p-1 * `RSS`)**로, 만약 변수 (p) 가 (RSS와 비교) 많아지면 `RSE`가 늘어난다.
+
+#### Prediction
+* 예측에는 다음의 **3가지 형태의 불확실성**이 존재한다.
+  1) True Model인 `f(X) = β₀ + β₁X₁ + β₂X₂ + β₃X₃ ....`과      
+     Regression Model인 `^Y = ^β₀ + ^β₁X₁ + ^β₂X₂ + ^β₃X₃ ....` 사이의 차이
+  * 이 경우에는 Confidence Interval로 계산해서 그 정도를 구한다.
+  2) Regression Model 자체에 존재하는 `model bias`가 존재한다.
+  3) 설령 True Model을 알아도, `random error (e)`가 여전히 존재한다.
+  * 이 경우에는 Prediction Interval로 예측에 사용한다.
+  
+### Other Considerations
+
+#### Qualitative Predictors (2개)
+* 만약 고려해야 할 변수가 질적 변수라면 다른 `Regression` 방법을 보아야 한다.
+* 만약 Predictor가 레벨이 2개면 `Dummy Variable`을 만들어서 `Regression`을 한다.
+
+#### Qualitative Predictors (2+)
+* 2개 이상의 질적 변수가 존재한다면, 이것도 `Dummy Variable`을 생성하는 식으로 진행한다.
+* 단, 그 변수들의 개수는 **레벨 수에 비해 하나가 작은데**, 이는 `Baseline`이다.
+* 회귀를 한 다음에 `p-value`를 측정하고, `F-test`를 통해서 이 `coefficient`가 통계적으로 의미가 있는지를 알 수 있다.     
+*데이터가 샘플링된 모집단에 가장 적합한 모델을 식별하기 위해 데이터 세트에 맞는 통계 모델을 비교할 때 가장 자주 사용된다.*
+
+### Extension of The Linear Model
+* 일반적인 **선형 회귀**는 두 변수 사이의 관계가 `additive`하고  `linear`함을 전제로 한다.
+* `additive`는 독립 변수인 `Xj`에 대해 `Y`의 변화가 **독립적**으로 움직인다는 것이며,
+* `linear`는 `Xj`의 유닛당 변동 **정도가 일정**하다는 의미이다.
+
+#### Removing Additive Effect
+* 만약 한 변수가 다른 변수와 `Synergy`가 보이면, 이는 올바른 선형 회귀식을 도출하지 않는다.
+* 즉, `β₀X1 + β₁X2..` 대신 `β₀X1X2 + β₁X2` 이런 식으로 얽힘 효과가 보인다.
+* 이런 시너지가 존재하는 식과 **별도의 식**을 비교해서 **그 효과의 통계적 영향**을 확인할 수 있다.
+* 가끔씩 어떤 시너지의 계수의 `p-value`가 높지 않을 때도 존재하는데,     
+  `hiearchial principle`에 따라 `시너지`가 들어갔으면 `main effect`도 함께 넣어야 한다.
+  
+#### Non-Linear Relationships
+* 만약 두 변수 사이의 관계가 선형 관계가 아니면 선형 회귀는 쓸모가 없다.
+* 대표적인 사례가 `다항식적 회귀 모델` 인데, 이 경우 대사 변수가 *제곱을 하는 식*으로 표현한다.
